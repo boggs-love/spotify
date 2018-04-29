@@ -1,8 +1,18 @@
 version: '3'
 services:
-  spotify:
+  api:
     command: 'npm run start-dev'
     ports:
       - 8888:80
     volumes:
       - ./:/app
+  database:
+    image: mariadb:10.1
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:

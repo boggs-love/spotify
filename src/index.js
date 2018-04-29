@@ -1,5 +1,7 @@
 import Hapi from 'hapi';
-import spotifySearch from './controllers/spotify/search';
+import Boom from 'boom';
+import spotifySearch from './controllers/spotify';
+import rsvpCreate from './controllers/rsvp';
 
 const server = Hapi.server({
   port: 80,
@@ -8,8 +10,27 @@ const server = Hapi.server({
 
 server.route({
   method: 'GET',
-  path: '/api/spotify/tracks',
+  path: '/spotify/tracks',
   handler: spotifySearch,
+});
+
+server.route({
+  method: 'POST',
+  path: '/rsvp',
+  handler: rsvpCreate,
+});
+
+server.ext('onPreResponse', (request, h) => {
+  const { response } = request;
+  if (response.isBoom) {
+    if (response.name && response.name === 'SequelizeValidationError') {
+      const error = Boom.badRequest(response.message);
+      error.output.payload.errors = response.errors;
+      return error;
+    }
+  }
+
+  return h.continue;
 });
 
 

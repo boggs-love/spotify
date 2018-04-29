@@ -1,6 +1,6 @@
 version: '3'
 services:
-  spotify:
+  api:
     build: ./
     image: boggs/spotify
     env_file:

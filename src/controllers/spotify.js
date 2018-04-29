@@ -1,5 +1,5 @@
 import Boom from 'boom';
-import createSpotify from '../../utils/spotify';
+import createSpotify from '../utils/spotify';
 
 const search = async (request) => {
   if (!request.query.query) {
