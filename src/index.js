@@ -28,6 +28,8 @@ server.ext('onPreResponse', (request, h) => {
       error.output.payload.errors = response.errors;
       return error;
     }
+
+    console.error(response.message);
   }
 
   return h.continue;

@@ -1,5 +1,7 @@
-import RSVP from './entities/rsvp';
+import sequelize from './utils/sequelize';
+import './entities/rsvp';
+import './entities/guest';
 
-RSVP.sync().then(() => {
+sequelize.sync().then(() => {
   process.exit(0);
 });
